@@ -1,0 +1,37 @@
+= errors_for @user
+
+.required
+  = f.label :name
+  = f.text_field :name
+
+- if Errbit::Config.user_has_username
+  .required
+    = f.label :username
+    = f.text_field :username
+
+.required
+  = f.label :email
+  = f.text_field :email
+
+.required
+  = f.label 'Entries per page'
+  = f.select :per_page, [10, 20, 30, 50, 75, 100]
+
+.required
+  = f.label :time_zone
+  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+
+- unless Cloudfuji::Platform.on_cloudfuji?
+  .required
+    = f.label :password
+    = f.password_field :password
+  
+  .required
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+- if current_user.admin?
+  .checkbox
+    = f.check_box :admin
+    = f.label :admin, 'Admin?'
+
