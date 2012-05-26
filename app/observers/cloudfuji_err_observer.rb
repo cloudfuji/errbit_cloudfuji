@@ -1,4 +1,6 @@
-class ErrObserver < Mongoid::Observer
+class CloudfujiErrObserver < Mongoid::Observer
+  observe :err
+
   def after_create(err)
     if ::Cloudfuji::Platform.on_cloudfuji?
       human_message = issue_title(err.problem)

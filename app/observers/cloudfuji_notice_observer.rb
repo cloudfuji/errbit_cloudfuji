@@ -1,4 +1,6 @@
-class NoticeObserver < Mongoid::Observer
+class CloudfujiNoticeObserver < Mongoid::Observer
+  observe :notice
+  
   def after_create(notice)
     if ::Cloudfuji::Platform.on_cloudfuji?
       @notice = notice
