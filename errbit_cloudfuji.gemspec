@@ -12,10 +12,6 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.version = Errbit::Cloudfuji::VERSION
 
-  s.add_development_dependency 'rspec-rails', '~> 2.6'
-  s.add_development_dependency 'capybara'
-  s.add_development_dependency 'combustion'
-
   s.add_dependency 'cloudfuji',           '>= 0.0.42'
   s.add_dependency 'devise_cloudfuji_authenticatable'
 
