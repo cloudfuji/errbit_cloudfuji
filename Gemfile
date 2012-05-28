@@ -1,5 +1,7 @@
 source :rubygems
 
+gem 'rake'
+
 gem 'bundler_local_development', :group => :development, :require => false
 begin
   require 'bundler_local_development'
