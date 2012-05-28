@@ -2,7 +2,7 @@ require 'errbit/cloudfuji'
 
 Errbit::Application.configure do
   # Register observers to fire Cloudfuji events
-  config.mongoid.observers = :cloudfuji_err_observer, :cloudfuji_notice_observer
+  config.mongoid.observers = :cloudfuji_notice_observer
 
   # Set default host for ActionMailer
   default_host = ENV['ERRBIT_HOST'] || ENV['BUSHIDO_DOMAIN']

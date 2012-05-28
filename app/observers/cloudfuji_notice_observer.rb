@@ -29,13 +29,12 @@ class CloudfujiNoticeObserver < Mongoid::Observer
       }
 
       if @notice.respond_to?(:user_attributes) && @notice.user_attributes.present?
-        event[:data].merge! {
-          :user_attributes => {
-            :ido_id => @notice.user_attributes[:ido_id],
-            :email  => @notice.user_attributes[:email]
-          }
-        }
+        event[:data].merge! :user_attributes => {
+                              :ido_id => @notice.user_attributes[:ido_id],
+                              :email  => @notice.user_attributes[:email]}
       end
+
+      puts "Publishing Cloudfuji Event: #{event.inspect}"
 
       ::Cloudfuji::Event.publish(event)
 
