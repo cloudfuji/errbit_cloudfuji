@@ -7,7 +7,7 @@ class CloudfujiNoticeObserver < Mongoid::Observer
       @err    = notice.err
       @app    = notice.problem.app
 
-      err_url = Rails.application.routes.url_helpers.app_err_url(@app, @err, :host => ENV['CLOUDFUJI_DOMAIN'])
+      err_url = Rails.application.routes.url_helpers.app_err_url(@app, notice.problem, :host => ENV['CLOUDFUJI_DOMAIN'])
 
       human_message = notice_title(notice.err.problem)
       human_message += " - see more at #{err_url}"
