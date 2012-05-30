@@ -19,3 +19,11 @@ namespace :cloudfuji do
     Rake::Task['db:mongoid:create_indexes'].invoke
   end
 end
+
+namespace :db do
+  desc "Migrate errbit_cloudfuji"
+  task :migrate => :environment do
+    Mongoid::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
+    Mongoid::Migrator.migrate(File.expand_path("../../../db/migrate/", __FILE__), ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+  end
+end
