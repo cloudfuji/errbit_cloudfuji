@@ -2,9 +2,10 @@ module Errbit
   module Cloudfuji
     class << self
       def enable_cloudfuji!
-        load_hooks!
+        load_observers!
         extend_user!
         extend_err!
+        extend_app!
         disable_devise_for_cloudfuji_controllers!
       end
 
@@ -33,8 +34,21 @@ module Errbit
         end
       end
 
-      def load_hooks!
-        Dir["#{Dir.pwd}/lib/cloudfuji/**/*.rb"].each { |file| require file }
+      def extend_app!
+        # Make CloudfujiTracker the default tracker
+        AppsController.class_eval do
+          def plug_params_with_cloudfuji_tracker(app)
+            plug_params_without_cloudfuji_tracker(app)
+            if app.issue_tracker.class == IssueTracker
+              app.issue_tracker = CloudfujiTracker.new
+            end
+          end
+          alias_method_chain :plug_params, :cloudfuji_tracker
+        end
+      end
+
+      def load_observers!
+        Dir[File.expand_path("../cloudfuji/event_observers/*.rb", __FILE__)].each { |file| require file }
       end
 
       # Temporary hack because all routes require authentication in

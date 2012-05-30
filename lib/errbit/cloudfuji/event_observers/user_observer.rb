@@ -1,7 +1,7 @@
 module Errbit
   module Cloudfuji
     module EventObservers
-      class AppObserver < ::Cloudfuji::EventObserver
+      class UserObserver < ::Cloudfuji::EventObserver
         def user_added
           puts "Adding a new user with incoming data #{params.inspect}"
           puts "Devise username column: #{::Devise.cas_username_column}="

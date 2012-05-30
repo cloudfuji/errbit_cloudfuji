@@ -12,6 +12,9 @@ Rails::Engine.initializers.detect{|i| i.name == :add_view_paths }.
 module Errbit
   module Cloudfuji
     class Engine < Rails::Engine
+      config.to_prepare do
+        Dir[File.expand_path("../../../app/models/issue_trackers/*.rb", __FILE__)].each {|f| require f }
+      end
     end
   end
 end
