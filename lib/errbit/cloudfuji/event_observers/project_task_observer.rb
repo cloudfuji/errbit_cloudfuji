@@ -6,7 +6,7 @@ module Errbit
         def project_task_created
           data = params['data']
           # Find error with matching ido_id
-          if err = Err.where(:ido_id => data['ido_id']).first
+          if data['ido_id'] && err = Err.where(:ido_id => data['ido_id']).first
             # Update issue link on error with task url
             if data['url'] && err.problem.issue_link != data['url']
               err.problem.update_attribute :issue_link, data['url']
