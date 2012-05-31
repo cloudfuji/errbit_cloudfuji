@@ -1,0 +1,9 @@
+#action-bar span a.cloudfuji_inactive {
+  background: transparent url(/assets/cloudfuji_inactive.png) 6px 5px no-repeat;
+  cursor: default;
+}
+#action-bar span.disabled:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}

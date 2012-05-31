@@ -30,6 +30,9 @@ module IssueTrackers
         puts "Publishing Cloudfuji Event: #{event.inspect}"
 
         ::Cloudfuji::Event.publish(event)
+
+        # Display 'pending' message until tracker responds with url
+        problem.update_attribute :issue_link, "pending"
       end
     end
 
