@@ -8,6 +8,12 @@ module IssueTrackers
       }]
     ]
 
+    def check_params
+      if Fields.detect {|f| self[f[0]].blank? }
+        errors.add :base, 'You must specify your Project Ido ID'
+      end
+    end
+
     def create_issue(problem, reported_by)
       if ::Cloudfuji::Platform.on_cloudfuji?
         err = problem.errs.last
@@ -32,12 +38,19 @@ module IssueTrackers
         ::Cloudfuji::Event.publish(event)
 
         # Display 'pending' message until tracker responds with url
-        problem.update_attribute :issue_link, "pending"
+        problem.update_attributes(
+          :issue_link => "pending",
+          :issue_type => Label
+        )
       end
     end
 
     def body_template
       @@body_template ||= ERB.new(File.read(File.expand_path("../../../views/issue_trackers/cloudfuji_body.txt.erb", __FILE__)).gsub(/^\s*/, ''))
+    end
+
+    def url
+      "http://cloudfuji.com"
     end
   end
 end
